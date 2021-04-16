@@ -3,15 +3,23 @@ import data from './data'
 function App() {
   const [count, setCount] = useState(1)
   const [text, setText] = useState([])
-  const handleSumbit = () => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('hello World ')
+    let amount = parseInt(count)
+    if (count < 1) {
+      amount = 1
+    }
+    if (count > data.length) {
+      amount = 8
+    }
+
+    setText(data.slice(0, amount))
   }
 
   return (
     <section className='section-center'>
       <h3>Tired of Boring Lorem Ipusm?</h3>
-      <form action='' className='lorem-form' form={onsubmit()}>
+      <form action='' className='lorem-form' onSubmit={handleSubmit}>
         <label htmlFor='amount'>Paragraphs: </label>
         <input
           type='number'
@@ -25,14 +33,9 @@ function App() {
         <button className='btn'>generate</button>
       </form>
       <article className='lorem-text'>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-          officia?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Error,
-          officia?
-        </p>
+        {text.map((item, index) => {
+          return <p key={index}>{item}</p>
+        })}
       </article>
     </section>
   )
